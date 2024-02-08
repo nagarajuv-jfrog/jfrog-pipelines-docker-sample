@@ -1,5 +1,5 @@
 resources:
-  - name: dbp_repo
+  - name: dbp_repo_sample
     type: GitRepo
     configuration:
       gitProvider: GitHubIntegration                       # <-- replace with your integration
@@ -7,7 +7,7 @@ resources:
       branches:
         include: master
 
-  - name: dbp_image
+  - name: dbp_image_sample
     type: Image
     configuration:
       registry: myArtifactory                                # <-- replace with your artifactory integration
@@ -16,21 +16,21 @@ resources:
       imageTag: latest
       autoPull: true
       
-  - name: dbp_build_info
+  - name: dbp_build_info_sample
     type: BuildInfo
     configuration:
       sourceArtifactory: myArtifactory
       buildName: dbp_build
       buildNumber: 1    
 
-  - name: dbp_promoted_build_info
+  - name: dbp_promoted_build_info_sample
     type: BuildInfo
     configuration:
       sourceArtifactory: myArtifactory
       buildName: dbp_build
       buildNumber: 1
       
-  - name: cron_trigger_docker
+  - name: cron_trigger_docker_sample
     type: CronTrigger
     configuration:
       interval: '0 2 * * *'       
@@ -50,8 +50,8 @@ pipelines:
           dockerImageName: pipelines.jfrog.io/quickstarts-docker-local/dbp  # replace with your image path and name
           dockerImageTag: ${run_number}
           inputResources:
-            - name: dbp_repo
-            - name: cron_trigger_docker
+            - name: dbp_repo_sample
+            - name: cron_trigger_docker_sample
           integrations:
             - name: myArtifactory                            # <-- replace with your artifactory integration
         execution:
@@ -70,7 +70,7 @@ pipelines:
           inputSteps:
             - name: docker_build
           outputResources:
-            - name: dbp_image           
+            - name: dbp_image_sample           
 
       - name: publish_dbp_build
         type: PublishBuildInfo
@@ -78,7 +78,7 @@ pipelines:
           inputSteps:
             - name: docker_push
           outputResources:
-            - name: dbp_build_info          
+            - name: dbp_build_info_sample          
 
       - name: promote_dbp_build
         type: PromoteBuild
@@ -87,6 +87,6 @@ pipelines:
           integrations:
             - name: myArtifactory
           inputResources:
-            - name: dbp_build_info
+            - name: dbp_build_info_sample
           outputResources:
-            - name: dbp_promoted_build_info
+            - name: dbp_promoted_build_info_sample

@@ -2,8 +2,8 @@ resources:
   - name: dbp_repo
     type: GitRepo
     configuration:
-      gitProvider: myGithub                       # <-- replace with your integration
-      path: jfrog/jfrog-pipelines-docker-sample    # <-- replace with your repository name
+      gitProvider: GitHubIntegration                       # <-- replace with your integration
+      path: nagarajuv-jfrog/jfrog-pipelines-docker-sample    # <-- replace with your repository name
       branches:
         include: master
 
@@ -37,7 +37,7 @@ resources:
       
 
 pipelines:
-  - name: Docker_Quickstart
+  - name: Docker_Quickstart_sample
     configuration:
       jfrogCliVersion: 2  
     steps:

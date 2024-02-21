@@ -59,7 +59,7 @@ pipelines:
             - task: jfrog/docker-push@v0.0.1 
               id: docker_build_publish 
               input: 
-                dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:${run_number}" 
+                dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:3" 
                 autoPublishBuildInfo: "true" 
                 xrayScan: "true" 
                 failOnScan: "false" 

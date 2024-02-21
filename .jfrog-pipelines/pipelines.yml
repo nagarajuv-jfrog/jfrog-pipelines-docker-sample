@@ -56,8 +56,8 @@ pipelines:
             - name: JFrogPAT_Sample                            # <-- replace with your artifactory integration
         execution:
           onStart:
-            - task: publish-task@v0.1.0
-              id: publish_docker_push
+            - task: jfrog/docker-push@v0.0.1 
+              id: docker_build_publish 
               input: 
                 dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:${run_number}" 
                 autoPublishBuildInfo: "true" 

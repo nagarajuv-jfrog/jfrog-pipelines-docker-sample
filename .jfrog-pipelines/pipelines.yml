@@ -1,43 +1,43 @@
 resources:
-  - name: dbp_repo_sample
+  - name: dbp_repo_sample_Task
     type: GitRepo
     configuration:
-      gitProvider: GitHubIntegration                       # <-- replace with your integration
+      gitProvider: GitHubIntegration_Sample                       # <-- replace with your integration
       path: nagarajuv-jfrog/jfrog-pipelines-docker-sample    # <-- replace with your repository name
       branches:
         include: master
 
-  - name: dbp_image_sample
+  - name: dbp_image_sample_Task
     type: Image
     configuration:
-      registry: myArtifactory                                # <-- replace with your artifactory integration
+      registry: JFrogPAT_Sample                                # <-- replace with your artifactory integration
       sourceRepository: quickstarts-docker-local               # <-- required if registry is Artifactory
       imageName: pipelines.jfrog.io/quickstarts-docker-local/dbp  # < -- replace with your image path and name
       imageTag: latest
       autoPull: true
       
-  - name: dbp_build_info_sample
+  - name: dbp_build_info_sample_Task
     type: BuildInfo
     configuration:
-      sourceArtifactory: myArtifactory
+      sourceArtifactory: JFrogPAT_Sample
       buildName: dbp_build
       buildNumber: 1    
 
-  - name: dbp_promoted_build_info_sample
+  - name: dbp_promoted_build_info_sample_Task
     type: BuildInfo
     configuration:
-      sourceArtifactory: myArtifactory
+      sourceArtifactory: JFrogPAT_Sample
       buildName: dbp_build
       buildNumber: 1
       
-  - name: cron_trigger_docker_sample
+  - name: cron_trigger_docker_sample_Task
     type: CronTrigger
     configuration:
       interval: '0 2 * * *'       
       
 
 pipelines:
-  - name: Docker_Quickstart_sample
+  - name: Docker_Quickstart_sample_TaskTest
     configuration:
       jfrogCliVersion: 2  
     steps:
@@ -50,43 +50,25 @@ pipelines:
           dockerImageName: pipelines.jfrog.io/quickstarts-docker-local/dbp  # replace with your image path and name
           dockerImageTag: ${run_number}
           inputResources:
-            - name: dbp_repo_sample
-            - name: cron_trigger_docker_sample
+            - name: dbp_repo_sample_Task
+            - name: cron_trigger_docker_sample_Task
           integrations:
-            - name: myArtifactory                            # <-- replace with your artifactory integration
+            - name: JFrogPAT_Sample                            # <-- replace with your artifactory integration
         execution:
           onStart:
               # - msg="Run description updated from step $step_id"
               # - update_run_description "$msg"  
-              - update_run_description "Add custom text for every run. Example - Build and push Docker image to Artifactory."
+              - update_run_description "Add custom text for every run. Example - Build and push Docker image to Artifactory."   
 
-      - name: docker_push
-        type: DockerPush
-        configuration:
-          affinityGroup: dbp_group
-          targetRepository: quickstarts-target-local
-          integrations:
-            - name: myArtifactory                            # <-- replace with your artifactory integration
-          inputSteps:
-            - name: docker_build
-          outputResources:
-            - name: dbp_image_sample           
+        execution:
+          onStart:
+            - task: jfrog/docker_build_publish@v0.0.1 
+              id: docker_build_publish 
+              input: 
+                dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:${run_number}" 
+                autoPublishBuildInfo: "true" 
+                xrayScan: "true" 
+                failOnScan: "false" 
+                outputBuildInfoResourceName: dbp_build_info_sample_Task
 
-      - name: publish_dbp_build
-        type: PublishBuildInfo
-        configuration:
-          inputSteps:
-            - name: docker_push
-          outputResources:
-            - name: dbp_build_info_sample          
 
-      - name: promote_dbp_build
-        type: PromoteBuild
-        configuration:
-          targetRepository: quickstarts-target-local
-          integrations:
-            - name: myArtifactory
-          inputResources:
-            - name: dbp_build_info_sample
-          outputResources:
-            - name: dbp_promoted_build_info_sample

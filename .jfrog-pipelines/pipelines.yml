@@ -1,5 +1,5 @@
 resources:
-  - name: dbp_repo_sample_Task
+  - name: dbp_repo_sample_Task1
     type: GitRepo
     configuration:
       gitProvider: GitHubIntegration_Sample_Task                       # <-- replace with your integration
@@ -7,7 +7,7 @@ resources:
       branches:
         include: master
 
-  - name: dbp_image_sample_Task
+  - name: dbp_image_sample_Task1
     type: Image
     configuration:
       registry: JFrogPAT_Sample                                # <-- replace with your artifactory integration
@@ -16,21 +16,21 @@ resources:
       imageTag: latest
       autoPull: true
       
-  - name: dbp_build_info_sample_Task
+  - name: dbp_build_info_sample_Task1
     type: BuildInfo
     configuration:
-      sourceArtifactory: JFrogPAT_Sample
+      sourceArtifactory: JFrogPAT_Sample1
       buildName: dbp_build
       buildNumber: 1    
 
-  - name: dbp_promoted_build_info_sample_Task
+  - name: dbp_promoted_build_info_sample_Task1
     type: BuildInfo
     configuration:
       sourceArtifactory: JFrogPAT_Sample
       buildName: dbp_build
       buildNumber: 1
       
-  - name: cron_trigger_docker_sample_Task
+  - name: cron_trigger_docker_sample_Task1
     type: CronTrigger
     configuration:
       interval: '0 2 * * *'       
@@ -50,8 +50,8 @@ pipelines:
           dockerImageName: pipelines.jfrog.io/quickstarts-docker-local/dbp  # replace with your image path and name
           dockerImageTag: ${run_number}
           inputResources:
-            - name: dbp_repo_sample_Task
-            - name: cron_trigger_docker_sample_Task
+            - name: dbp_repo_sample_Task1
+            - name: cron_trigger_docker_sample_Task1
           integrations:
             - name: JFrogPAT_Sample                            # <-- replace with your artifactory integration
         execution:
@@ -63,6 +63,6 @@ pipelines:
                 autoPublishBuildInfo: "true" 
                 xrayScan: "true" 
                 failOnScan: "false" 
-                outputBuildInfoResourceName: dbp_build_info_sample_Task
+                outputBuildInfoResourceName: dbp_build_info_sample_Task1
 
 

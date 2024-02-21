@@ -37,7 +37,7 @@ resources:
       
 
 pipelines:
-  - name: Docker_Quickstart_sample_TaskTest
+  - name: Docker_Quickstart_sample_TaskTest1
     configuration:
       jfrogCliVersion: 2  
     steps:

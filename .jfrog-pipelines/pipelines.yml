@@ -19,7 +19,7 @@ resources:
   - name: dbp_build_info_sample_Task1
     type: BuildInfo
     configuration:
-      sourceArtifactory: JFrogPAT_Sample1
+      sourceArtifactory: JFrogPAT_Sample
       buildName: dbp_build
       buildNumber: 1    
 

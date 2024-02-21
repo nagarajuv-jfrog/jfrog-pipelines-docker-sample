@@ -48,7 +48,7 @@ pipelines:
           dockerFileLocation: .
           dockerFileName: Dockerfile
           dockerImageName: pipelines.jfrog.io/quickstarts-docker-local/dbp  # replace with your image path and name
-          dockerImageTag: ${run_number}
+          dockerImageTag: abc
           inputResources:
             - name: dbp_repo_sample_Task1
             - name: cron_trigger_docker_sample_Task1
@@ -59,7 +59,7 @@ pipelines:
             - task: jfrog/docker-push@v0.0.1 
               id: docker_build_publish 
               input: 
-                dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:3" 
+                dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:abc" 
                 autoPublishBuildInfo: "true" 
                 xrayScan: "true" 
                 failOnScan: "false" 

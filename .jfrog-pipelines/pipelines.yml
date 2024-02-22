@@ -51,12 +51,12 @@ pipelines:
             - name: JFrogPAT_Sample                            # <-- replace with your artifactory integration
         execution:
           onStart:
-            - task: jfrog/docker-build@latest
+            - task: jfrog/docker-build@v0.1.0
               id: docker_build_task_test
               input:
                 resourceName: dbp_repo_sample_Task1
                 dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"
-            - task: jfrog/docker-push@latest
+            - task: jfrog/docker-push@v0.1.0
               id: docker_push_task_test
               input:
                 dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"

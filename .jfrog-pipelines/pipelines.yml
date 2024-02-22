@@ -52,6 +52,7 @@ pipelines:
         execution:
           onStart:
             - task: jfrog/docker-build@v0.1.0
+              repository: pipelines-tasks-virtual
               id: docker_build_task_test
               input:
                 resourceName: dbp_repo_sample_Task1

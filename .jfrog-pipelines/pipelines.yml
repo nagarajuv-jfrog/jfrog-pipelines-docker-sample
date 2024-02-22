@@ -61,8 +61,7 @@ pipelines:
               input:
                 dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"
                 autoPublishBuildInfo: "true"
-                xrayScan: "true"
+                xrayScan: "false"
                 failOnScan: "false"
-                outputBuildInfoResourceName: "dbp_build_info_sample_Task1"
 
 

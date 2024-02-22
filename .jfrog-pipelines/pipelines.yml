@@ -52,13 +52,13 @@ pipelines:
         execution:
           onStart:
             - task: jfrog/docker-build@latest
-              repository: jfrog-pipelines-docker-sample1            
+              repository: pipelines-tasks-virtual            
               id: docker_build_task_test
               input:
                 resourceName: dbp_repo_sample_Task1
                 dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"
             - task: jfrog/docker-push@latest
-              repository: jfrog-pipelines-docker-sample1            
+              repository: pipelines-tasks-virtual            
               id: docker_push_task_test
               input:
                 dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"

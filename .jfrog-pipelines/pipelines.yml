@@ -40,15 +40,9 @@ pipelines:
   - name: Docker_Quickstart_sample_TaskTest1
     configuration:
       jfrogCliVersion: 2  
-    steps:
-      - name: docker_build
-        type: DockerBuild
+      - name: test_docker_build
+        type: Bash
         configuration:
-          affinityGroup: dbp_group
-          dockerFileLocation: .
-          dockerFileName: Dockerfile
-          dockerImageName: pipelines.jfrog.io/quickstarts-docker-local/dbp  # replace with your image path and name
-          dockerImageTag: abc
           inputResources:
             - name: dbp_repo_sample_Task1
             - name: cron_trigger_docker_sample_Task1
@@ -56,13 +50,20 @@ pipelines:
             - name: JFrogPAT_Sample                            # <-- replace with your artifactory integration
         execution:
           onStart:
-            - task: jfrog/docker-push@v0.0.1 
-              id: docker_build_publish 
-              input: 
-                dockerImage: "pipelines.jfrog.io/quickstarts-docker-local/dbp:abc" 
-                autoPublishBuildInfo: "true" 
-                xrayScan: "true" 
-                failOnScan: "false" 
-                outputBuildInfoResourceName: dbp_build_info_sample_Task1
+            - task: jfrog/docker-build@latest
+              repository: pipelines-tasks-virtual
+              id: docker_build_task_test
+              input:
+                resourceName: dbp_repo_sample_Task1
+                dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"
+            - task: jfrog/docker-push@latest
+              repository: pipelines-tasks-virtual
+              id: docker_push_task_test
+              input:
+                dockerImage: "pipelines.jfrog.io/quickstarts-help-center/docker:latest"
+                autoPublishBuildInfo: "true"
+                xrayScan: "true"
+                failOnScan: "false"
+                outputBuildInfoResourceName: "dbp_build_info_sample_Task1"
 
 

@@ -2,7 +2,7 @@ resources:
   - name: dbp_repo_sample_Task1
     type: GitRepo
     configuration:
-      gitProvider: GitHubIntegration_Sample_Task                       # <-- replace with your integration
+      gitProvider: GitHubIntegration_Sample                 # <-- replace with your integration
       path: nagarajuv-jfrog/jfrog-pipelines-docker-sample1    # <-- replace with your repository name
       branches:
         include: master
